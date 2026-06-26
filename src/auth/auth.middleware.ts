@@ -7,6 +7,10 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private configService: ConfigService) {}
   
   use(req: Request, res: Response, next: NextFunction) {
+    if (req.method === 'OPTIONS') {
+      return next()
+    }
+
     const token = req.headers['authorization']
     const validToken = this.configService.get('AUTH_TOKEN')
     if (!token || token !== validToken) {
