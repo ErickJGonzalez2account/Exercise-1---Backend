@@ -7,6 +7,7 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private configService: ConfigService) {}
   
   use(req: Request, res: Response, next: NextFunction) {
+    // Dejar pasar el preflight de CORS
     if (req.method === 'OPTIONS') {
       return next()
     }
