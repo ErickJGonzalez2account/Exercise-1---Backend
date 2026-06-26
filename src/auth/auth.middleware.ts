@@ -7,14 +7,14 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private configService: ConfigService) {}
   
   use(req: Request, res: Response, next: NextFunction) {
-    // Dejar pasar el preflight de CORS
     if (req.method === 'OPTIONS') {
       return next()
     }
 
-    const token = req.headers['authorization']
-    const validToken = this.configService.get('AUTH_TOKEN')
-    if (!token || token !== validToken) {
+    var token = req.headers['authorization']
+    var tokenValido = this.configService.get('AUTH_TOKEN')
+
+    if ( !token || token !== tokenValido ) {
       throw new UnauthorizedException('Token inválido o no proporcionado')
     }
     next()
